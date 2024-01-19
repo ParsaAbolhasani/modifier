@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.7.0 <0.9.0;
+
+contract testModifier{
+    uint public price =10;
+    address public owner;
+    address public zero = address(0);
+
+    constructor(){
+        owner = msg.sender;
+    }
+    modifier onlyowner{
+        require(msg.sender == owner,"Access deneid");
+        _;
+    }
+
+    modifier not_zero(address test_address){
+        require(test_address != address(0),"IT is buring address");
+        _;
+    }
+
+    function update_price(uint _price) public onlyowner{
+        price = _price;
+    }
+
+    function update_owner(address new_owner) public onlyowner not_zero(new_owner){
+        owner = new_owner;
+    }
+}
